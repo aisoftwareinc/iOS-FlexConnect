@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraController" customModule="FlexConnect" customModuleProvider="target">
+            <connections>
+                <outlet property="imageView" destination="YMa-NH-EPN" id="vQL-UN-PMr"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YMa-NH-EPN">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="609"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zRS-IS-Wst">
+                    <rect key="frame" x="160" y="626" width="55" height="30"/>
+                    <state key="normal" title="Capture"/>
+                    <connections>
+                        <action selector="capture:" destination="-1" eventType="touchUpInside" id="SVO-eH-yTe"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="YMa-NH-EPN" secondAttribute="top" constant="20" id="9e0-qK-ddT"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="YMa-NH-EPN" secondAttribute="trailing" id="PvR-gj-ubd"/>
+                <constraint firstItem="zRS-IS-Wst" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Qeh-uV-N8U"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zRS-IS-Wst" secondAttribute="bottom" constant="11" id="TNc-pn-Fgi"/>
+                <constraint firstItem="zRS-IS-Wst" firstAttribute="top" secondItem="YMa-NH-EPN" secondAttribute="bottom" constant="17" id="eTA-X3-7at"/>
+                <constraint firstItem="YMa-NH-EPN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="g2V-Wf-uu0"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="33.5" y="58.5"/>
+        </view>
+    </objects>
+</document>

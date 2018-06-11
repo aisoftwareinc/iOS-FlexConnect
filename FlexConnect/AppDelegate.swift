@@ -8,15 +8,19 @@
 
 import UIKit
 import CoreData
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var appCoordinator: AppCoordinator!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        GMSServices.provideAPIKey("AIzaSyCrDae7Hujpyg3g9KDQkxbtXWO2K_SaeYc")
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.appCoordinator = AppCoordinator(window: self.window!)
+        self.appCoordinator.start()
         return true
     }
 
