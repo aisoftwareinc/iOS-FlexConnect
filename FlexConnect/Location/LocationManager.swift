@@ -47,7 +47,7 @@ class LocationManager: NSObject {
         }
         
         let locationRequest = Requests.reportLocationPostRequest(String(currentLocation.coordinate.latitude), String(currentLocation.coordinate.longitude))
-        Networking.fetch(locationRequest, completion: { (result: Result<Success>) in
+        Networking.send(locationRequest, completion: { (result: Result<Success>) in
             switch result {
             case .success(let response):
                 print(response)
@@ -58,10 +58,12 @@ class LocationManager: NSObject {
     }
     
     func stop() {
-        self.locationManager.stopUpdatingLocation()
-        self.isUpdating = false
-        self.didSendInitial = false
-        self.timer.invalidate()
+        if self.isUpdating {
+            self.locationManager.stopUpdatingLocation()
+            self.isUpdating = false
+            self.didSendInitial = false
+            self.timer.invalidate()
+        }
     }
 }
 

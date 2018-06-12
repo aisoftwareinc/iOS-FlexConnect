@@ -17,14 +17,14 @@ class DeliveryManager {
     private var deliveries = [Delivery]()
     
     func fetchDeliveries(_ completion: @escaping (([Delivery]?) -> ())) {
-        Networking.fetch(Requests.fetchDeliveries()) { (result: Result<OrderModel>) in
+        Networking.send(Requests.fetchDeliveries()) { (result: Result<OrderModel>) in
             switch result {
             case .success(let order):
                 
 //                order.deliveries.forEach({ CoreData.shared.saveDelivery($0.guid) })
 //                self.deliveries = order.deliveries
 //                completion(self.deliveries)
-//
+
                 
                 let stubs = DeliveryStubs.deliveries()
                 stubs.forEach({ CoreData.shared.saveDelivery($0.guid) })

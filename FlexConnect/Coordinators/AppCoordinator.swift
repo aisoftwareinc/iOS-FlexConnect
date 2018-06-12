@@ -73,7 +73,7 @@ class AppCoordinator: NSObject {
     }
     
     func fetchTimeInterval() {
-        Networking.fetch(Requests.timeInterval()) { (result: Result<TimeInterval>) in
+        Networking.send(Requests.timeInterval()) { (result: Result<TimeInterval>) in
             switch result {
             case .success(let timeInterval):
                 LocationManager.shared.timeInterval = Double(timeInterval.duration) ?? 300.0
@@ -91,7 +91,7 @@ extension AppCoordinator: LoginControllerProtocol {
         switch state {
         case .authorizeToken(let enteredToken):
             if self.authToken == enteredToken {
-                Networking.fetch(Requests.fetchDeliveries()) { (result: Result<OrderModel>) in
+                Networking.send(Requests.fetchDeliveries()) { (result: Result<OrderModel>) in
                     switch result {
                     case .success(let orders):
                         print(orders)
@@ -108,7 +108,7 @@ extension AppCoordinator: LoginControllerProtocol {
                 controller.setState(.requestToken(""))
             }
         case .requestToken(let phoneNumber):
-            Networking.fetch(Requests.authCode(phoneNumber)) { (result: Result<AuthCode>) in
+            Networking.send(Requests.authCode(phoneNumber)) { (result: Result<AuthCode>) in
                 switch result {
                 case .success(let authCode):
                     TokenHelper.saveNumber(phoneNumber)
@@ -123,6 +123,14 @@ extension AppCoordinator: LoginControllerProtocol {
 }
 
 extension AppCoordinator: OrderControllerProtocol {
+    func logOut() {
+        TokenHelper.removeNumber()
+        let loginController = LoginViewController.init()
+        loginController.delegate = self
+        loginController.title = "FlexConnect"
+        self.navigationController.viewControllers = [loginController]
+    }
+    
     func didTapOrder(_ order: Delivery) {
         let details = OrderDetailsViewController.init(order)
         details.delegate = self
@@ -156,7 +164,7 @@ extension AppCoordinator: OrderDetailsDelegate {
     func userDidTapEnroute(_ bool: Bool, _ delivery: Delivery) {
         bool ? LocationManager.shared.start() : LocationManager.shared.stop()
         self.deliveryManager.deliveryEnroute(delivery, state: bool)
-        Networking.fetch(Requests.status("2", delivery.guid, base64Image: "", comments: "")) { (result: Result<Success>) in
+        Networking.send(Requests.status("2", delivery.guid, base64Image: "", comments: "")) { (result: Result<Success>) in
             switch result {
             case .success:
                 CoreData.shared.setEnroute(delivery.guid, bool)
@@ -169,11 +177,12 @@ extension AppCoordinator: OrderDetailsDelegate {
     }
     
     func userDidTapDelivered(_ delivery: Delivery, _ guid: String, photoStringBase64: String, comments: String) {
-        Networking.fetch(Requests.status("3", guid, base64Image: photoStringBase64, comments: comments)) { (result: Result<Success>) in
+        Networking.send(Requests.status("3", guid, base64Image: photoStringBase64, comments: comments)) { (result: Result<Success>) in
             switch result {
             case .success:
                 self.deliveryManager.removeDelivery(delivery)
                 self.navigationController.popViewController(animated: true)
+                LocationManager.shared.stop()
                 print("Success photo attachment.")
             case .failure:
                 print("Failed deilvered")

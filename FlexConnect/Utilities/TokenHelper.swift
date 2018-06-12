@@ -27,4 +27,8 @@ struct TokenHelper {
         }
         return number
     }
+    
+    static func removeNumber() {
+        UserDefaults.standard.removeObject(forKey: TokenHelper.phoneNumber)
+    }
 }

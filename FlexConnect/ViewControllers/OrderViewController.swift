@@ -12,6 +12,7 @@ protocol OrderControllerProtocol: class {
     func didTapOrder(_ order: Delivery)
     func checkForNewDeliveries(for orderController: OrderViewController)
     func updateDeliveries() -> [Delivery]
+    func logOut()
 }
 
 class OrderViewController: UIViewController {
@@ -35,16 +36,6 @@ class OrderViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc
-    func pullToRefresh() {
-        self.delegate?.checkForNewDeliveries(for: self)
-    }
-    
-    func refresh(_ orders: [Delivery]) {
-        self.orders = orders
-        self.tableView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.dataSource = self
@@ -58,11 +49,27 @@ class OrderViewController: UIViewController {
         self.refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         self.refreshControl.attributedTitle = NSAttributedString.init(string: "Checking for new deliveries...")
         self.tableView.addSubview(self.refreshControl)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Log Out", style: .plain, target: self, action: #selector(self.logout))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.orders = self.delegate!.updateDeliveries()
         self.tableView.reloadData()
+    }
+    
+    @objc
+    func pullToRefresh() {
+        self.delegate?.checkForNewDeliveries(for: self)
+    }
+    
+    func refresh(_ orders: [Delivery]) {
+        self.orders = orders
+        self.tableView.reloadData()
+    }
+    
+    @objc
+    func logout() {
+        self.delegate?.logOut()
     }
 }
 

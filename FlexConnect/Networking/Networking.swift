@@ -14,7 +14,7 @@ enum Result<T> {
 }
 
 class Networking {
-    static func fetch<T: Codable>(_ request: URLRequest, completion: @escaping (Result<T>) -> Void) {
+    static func send<T: Codable>(_ request: URLRequest, completion: @escaping (Result<T>) -> Void) {
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request) { (data, response, error) in
             if let _ = error {
