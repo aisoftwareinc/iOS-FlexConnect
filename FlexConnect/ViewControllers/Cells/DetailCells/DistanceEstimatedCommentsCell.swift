@@ -16,6 +16,7 @@ class DistanceEstimatedCommentsCell: UITableViewCell {
     
     override func awakeFromNib() {
         self.selectionStyle = .none
+        self.backgroundColor = Colors.background
     }
     
     func configure(_ delivery: Delivery) {

@@ -39,7 +39,6 @@ class AppCoordinator: NSObject {
             self.showLogin()
             return
         }
-        self.fetchTimeInterval()
         self.fetchOrders()
     }
     
@@ -71,17 +70,6 @@ class AppCoordinator: NSObject {
             orderController.refresh(deliveries)
         }
     }
-    
-    func fetchTimeInterval() {
-        Networking.send(Requests.timeInterval()) { (result: Result<TimeInterval>) in
-            switch result {
-            case .success(let timeInterval):
-                LocationManager.shared.timeInterval = Double(timeInterval.duration) ?? 300.0
-            case .failure:
-                print("Failed to fetch time interval.")
-            }
-        }
-    }
 }
 
 // MARK: Login Delegate
@@ -98,9 +86,11 @@ extension AppCoordinator: LoginControllerProtocol {
                         let orderController = OrderViewController.init(orders.deliveries)
                         orderController.title = "Orders"
                         orderController.delegate = self
+                        self.navigationController.navigationBar.isHidden = false
                         self.navigationController.pushViewController(orderController, animated: true)
                     case .failure:
-                        print("Failed to fetch deliveries")
+                        self.navigationController.present(Utilities.showAlert("There was error fetching deliveries."), animated: true, completion: nil)
+                        controller.setState(.requestToken(""))
                     }
                 }
             } else {
@@ -119,6 +109,10 @@ extension AppCoordinator: LoginControllerProtocol {
                 }
             }
         }
+    }
+    
+    func reset(_ controller: LoginViewController) {
+        controller.setState(.requestToken(""))
     }
 }
 
@@ -162,9 +156,21 @@ extension AppCoordinator: OrderControllerProtocol {
 
 extension AppCoordinator: OrderDetailsDelegate {
     func userDidTapEnroute(_ bool: Bool, _ delivery: Delivery) {
-        bool ? LocationManager.shared.start() : LocationManager.shared.stop()
         self.deliveryManager.deliveryEnroute(delivery, state: bool)
-        Networking.send(Requests.status("2", delivery.guid, base64Image: "", comments: "")) { (result: Result<Success>) in
+        if bool == false, self.deliveryManager.enrouteDeliveries() == 0 && LocationManager.shared.isUpdating {
+            LocationManager.shared.stop()
+        } else {
+            if let seconds = Int(delivery.timeInterval) {
+                if Double((seconds * 60)) < LocationManager.shared.timeInterval {
+                    LocationManager.shared.timeInterval = Double(seconds * 60)
+                }
+            }
+            LocationManager.shared.start()
+        }
+        
+        let status = bool == true ? "2" : "1"
+        
+        Networking.send(Requests.status(status, delivery.guid, base64Image: "", comments: "")) { (result: Result<Success>) in
             switch result {
             case .success:
                 CoreData.shared.setEnroute(delivery.guid, bool)
@@ -182,10 +188,13 @@ extension AppCoordinator: OrderDetailsDelegate {
             case .success:
                 self.deliveryManager.removeDelivery(delivery)
                 self.navigationController.popViewController(animated: true)
-                LocationManager.shared.stop()
-                print("Success photo attachment.")
+                
+                if self.deliveryManager.enrouteDeliveries() == 0 {
+                    LocationManager.shared.stop()
+                }
+                print("Successfully attached photo.")
             case .failure:
-                print("Failed deilvered")
+                self.navigationController.present(Utilities.showAlert("There was an error attempting connect to the service. Please try again."), animated: true, completion: nil)
             }
         }
     }

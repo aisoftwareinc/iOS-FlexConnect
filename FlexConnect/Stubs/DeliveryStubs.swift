@@ -30,7 +30,8 @@ struct DeliveryStubs {
         "Status": "Pending",
         "Time": "By The End of The Day",
         "TimerInterval": "5",
-        "Zip": "90015"
+        "Zip": "90015",
+        "TimeInterval" : "10"
     },
     {
         "Address": "1111 S Figueroa St",
@@ -50,7 +51,8 @@ struct DeliveryStubs {
         "Status": "Pending",
         "Time": "By The End of The Day",
         "TimerInterval": "5",
-        "Zip": "90015"
+        "Zip": "90015",
+        "TimeInterval" : "10"
     },
     {
         "Address": "1111 S Figueroa St",
@@ -70,7 +72,8 @@ struct DeliveryStubs {
         "Status": "Pending",
         "Time": "By The End of The Day",
         "TimerInterval": "5",
-        "Zip": "90015"
+        "Zip": "90015",
+        "TimeInterval" : "10"
     },
     {
         "Address": "1111 S Figueroa St",
@@ -90,7 +93,8 @@ struct DeliveryStubs {
         "Status": "Pending",
         "Time": "By The End of The Day",
         "TimerInterval": "5",
-        "Zip": "90015"
+        "Zip": "90015",
+        "TimeInterval" : "10"
     },
     {
         "Address": "1111 S Figueroa St",
@@ -110,13 +114,13 @@ struct DeliveryStubs {
         "Status": "Pending",
         "Time": "By The End of The Day",
         "TimerInterval": "5",
-        "Zip": "90015"
+        "Zip": "90015",
+        "TimeInterval" : "10"
     }
 ]
 """
         let jsonData = json.data(using: .utf8)!
         let deliveries = try! JSONDecoder().decode([Delivery].self, from: jsonData)
         return deliveries
-//        return try! JSONDecoder().decode([Delivery.self], from: jsonData)
     }
 }

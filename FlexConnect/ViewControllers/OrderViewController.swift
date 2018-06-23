@@ -44,7 +44,7 @@ class OrderViewController: UIViewController {
         self.tableView.register(UINib.init(nibName: "AppDescriptionCell", bundle: nil), forCellReuseIdentifier: "AppDescriptionCell")
         self.tableView.tableFooterView = UIView()
         self.tableView.reloadData()
-        
+        self.tableView.backgroundColor = Colors.background
         //Register pull to refresh
         self.refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         self.refreshControl.attributedTitle = NSAttributedString.init(string: "Checking for new deliveries...")
@@ -78,14 +78,21 @@ extension OrderViewController: UITableViewDataSource, UITableViewDelegate {
         if self.orders.count == 0 {
             return 1
         }
-        return self.orders.count
+        return self.orders.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if self.orders.count == 0 {
             let appDescriptionCell = tableView.dequeueReusableCell(withIdentifier: "AppDescriptionCell", for: indexPath) as! AppDescriptionCell
-            appDescriptionCell.cellDescription.text = "No deliveries for phone number. \n Pull down to Refresh."
+            appDescriptionCell.cellDescription.text = "No deliveries for phone number. \n Pull down to refresh."
+            appDescriptionCell.isUserInteractionEnabled = false
+            return appDescriptionCell
+        }
+        
+        if (indexPath.row + 1) == self.tableView.numberOfRows(inSection: 0) {
+            let appDescriptionCell = tableView.dequeueReusableCell(withIdentifier: "AppDescriptionCell", for: indexPath) as! AppDescriptionCell
+            appDescriptionCell.cellDescription.text = "End of Deliveries."
             appDescriptionCell.isUserInteractionEnabled = false
             return appDescriptionCell
         }

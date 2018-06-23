@@ -40,6 +40,7 @@ class OrderDetailsViewController: UIViewController {
         self.tableView.register(UINib.init(nibName: "DistanceEstimatedCommentsCell", bundle: nil), forCellReuseIdentifier: "DistanceEstimatedCommentsCell")
         self.tableView.register(UINib.init(nibName: "StatusWithDirectionsCell", bundle: nil), forCellReuseIdentifier: "StatusWithDirectionsCell")
         self.tableView.reloadData()
+        self.tableView.backgroundColor = Colors.background
         self.tableView.tableFooterView = UIView()
         self.order.orderIsEnroute(true)
     }
@@ -88,11 +89,13 @@ extension OrderDetailsViewController: StatusCellProtocol {
             let noAction = UIAlertAction.init(title: "No", style: .default, handler: { action in
                 self.delegate?.userDidTapDelivered(self.order, self.order.guid, photoStringBase64: self.deliveryStatus?.attachedPicture ?? "", comments: "")
             })
-            let addPhotoAction = UIAlertAction.init(title: "Yes", style: .cancel) { (action) in
+            let addPhotoAction = UIAlertAction.init(title: "Yes", style: .default) { (action) in
                 self.delegate?.attachPhoto(self)
             }
+            let cancelAction = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
             alertController.addAction(noAction)
             alertController.addAction(addPhotoAction)
+            alertController.addAction(cancelAction)
             self.present(alertController, animated: true, completion: nil)
             return
         }

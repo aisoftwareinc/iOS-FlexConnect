@@ -21,9 +21,10 @@ class DeliveryManager {
             switch result {
             case .success(let order):
                 
-//                order.deliveries.forEach({ CoreData.shared.saveDelivery($0.guid) })
-//                self.deliveries = order.deliveries
-//                completion(self.deliveries)
+                order.deliveries.forEach({ CoreData.shared.saveDelivery($0.guid) })
+                self.deliveries = order.deliveries
+                DispatchQueue.main.async { completion(self.deliveries) }
+            
 
                 
                 let stubs = DeliveryStubs.deliveries()
@@ -51,4 +52,9 @@ class DeliveryManager {
             self.deliveries[index] = enrouteDelivery
         }
     }
+    
+    func enrouteDeliveries() -> Int {
+        return self.deliveries.filter({ $0.status == "En route" }).count
+    }
+    
 }

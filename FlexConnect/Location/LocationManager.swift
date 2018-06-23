@@ -16,7 +16,7 @@ class LocationManager: NSObject {
     
     var locationManager: CLLocationManager!
     var currentLocation: CLLocation?
-    var timeInterval: Double = 10.0
+    var timeInterval: Double = 10000.0
     var isUpdating: Bool = false
     var didSendInitial: Bool = false
     
@@ -33,12 +33,13 @@ class LocationManager: NSObject {
     }
     
     func start() {
+        if !self.isUpdating {
         self.locationManager.startUpdatingLocation()
-        self.isUpdating = true
-        
-        self.timer = Timer.scheduledTimer(withTimeInterval: self.timeInterval, repeats: true, block: { (Timer) in
-            self.sendLocation()
-        })
+            self.isUpdating = true
+            self.timer = Timer.scheduledTimer(withTimeInterval: self.timeInterval, repeats: true, block: { (Timer) in
+                self.sendLocation()
+            })
+        }
     }
     
     func sendLocation() {
@@ -62,6 +63,7 @@ class LocationManager: NSObject {
             self.locationManager.stopUpdatingLocation()
             self.isUpdating = false
             self.didSendInitial = false
+            self.timeInterval = 10000.0
             self.timer.invalidate()
         }
     }

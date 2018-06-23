@@ -21,6 +21,7 @@ struct Delivery: Codable, Equatable {
     var status: String
     var enroute: Bool?
     var delivered: Bool?
+    var timeInterval: String
 
     enum CodingKeys: String, CodingKey {
         case guid = "GUID"
@@ -40,6 +41,7 @@ struct Delivery: Codable, Equatable {
         case distance = "Distance"
         case miles = "Miles"
         case comments = "Comments"
+        case timeInterval = "TimerInterval"
     }
     
     mutating func orderIsEnroute(_ bool: Bool) {

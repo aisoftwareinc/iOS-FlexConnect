@@ -14,28 +14,24 @@ class OrderCell: UITableViewCell {
     @IBOutlet weak var address: UILabel!
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var eta: UILabel!
-    @IBOutlet weak var urgency: UILabel!
     @IBOutlet weak var distance: UILabel!
+    @IBOutlet weak var comments: UILabel!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        self.backgroundColor = Colors.background
+        self.preservesSuperviewLayoutMargins = false
+        self.separatorInset = UIEdgeInsets.zero
+        self.layoutMargins = UIEdgeInsets.zero
     }
     
     func configureCell(_ order: Delivery) {
         self.destination.text = order.customerName
-        self.address.text = order.address
         self.status.text = order.status
         self.eta.text = order.time
-        self.urgency.text = order.status
-        self.distance.text = order.miles
+        self.status.textColor = order.status == "Pending" ? Colors.green : Colors.blue
+        self.comments.text = order.comments == "" ? "Comments: N/A" : "Comments: \n\(order.comments)"
     }
     
 }

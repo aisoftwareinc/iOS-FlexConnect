@@ -11,6 +11,7 @@ import GoogleMaps
 
 protocol LoginControllerProtocol: class {
     func didClickAction(_ controller: LoginViewController, _ state: LoginState)
+    func reset(_ controller: LoginViewController)
 }
 
 enum LoginState {
@@ -20,8 +21,11 @@ enum LoginState {
 
 class LoginViewController: UIViewController {
     
-    @IBOutlet weak var phoneNumber: UITextField!
+    @IBOutlet weak var entryField: UITextField!
+    
     @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
+    
     weak var delegate: LoginControllerProtocol?
     var loginState: LoginState = .requestToken("")
     
@@ -35,32 +39,44 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.entryField.layer.cornerRadius = 3.0
+        self.entryField.layer.borderWidth = 1.0
+        self.entryField.layer.borderColor = UIColor.darkGray.cgColor
+        self.resetButton.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
+        self.view.backgroundColor = Colors.background
     }
     
     func setState(_ state: LoginState) {
         self.loginState = state
         switch self.loginState {
         case .requestToken:
-            self.phoneNumber.text = ""
-            self.phoneNumber.placeholder = "Phone Number"
+            self.entryField.text = ""
+            self.entryField.placeholder = "Phone Number"
             self.actionButton.setTitle("Request Token", for: .normal)
+            self.resetButton.isHidden = true
         case .authorizeToken:
-            self.phoneNumber.text = ""
-            self.phoneNumber.placeholder = "Token"
+            self.entryField.text = ""
+            self.entryField.placeholder = "Token"
             self.actionButton.setTitle("Verify Token", for: .normal)
+            self.resetButton.isHidden = false
         }
     }
     
+
+    @IBAction func resetLogin(_ sender: UIButton) {
+        self.delegate?.reset(self)
+    }
     
     @IBAction func loginAction(_ sender: UIButton) {
         switch self.loginState {
         case .requestToken:
-            guard let enteredNumber = self.phoneNumber.text else {
+            guard let enteredNumber = self.entryField.text else {
                 return
             }
             self.delegate?.didClickAction(self, .requestToken(enteredNumber))
         case .authorizeToken:
-            guard let enteredToken = self.phoneNumber.text else {
+            guard let enteredToken = self.entryField.text else {
                 return
             }
             self.delegate?.didClickAction(self, .authorizeToken(enteredToken))

@@ -32,8 +32,8 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ku4-F8-60K">
-                        <rect key="frame" x="92" y="56" width="136" height="30"/>
-                        <state key="normal" title="Packaged Delivered"/>
+                        <rect key="frame" x="105" y="56" width="110" height="30"/>
+                        <state key="normal" title="Deliver Package"/>
                         <connections>
                             <action selector="delivered:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2DG-QK-ISn"/>
                         </connections>
