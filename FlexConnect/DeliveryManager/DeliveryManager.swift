@@ -27,10 +27,10 @@ class DeliveryManager {
             
 
                 
-                let stubs = DeliveryStubs.deliveries()
-                stubs.forEach({ CoreData.shared.saveDelivery($0.guid) })
-                self.deliveries = stubs
-                completion(self.deliveries)
+//                let stubs = DeliveryStubs.deliveries()
+//                stubs.forEach({ CoreData.shared.saveDelivery($0.guid) })
+//                self.deliveries = stubs
+//                completion(self.deliveries)
             case .failure:
                 completion(nil)
             }
