@@ -25,15 +25,17 @@
                             <action selector="enRoute:" destination="KGk-i7-Jjw" eventType="valueChanged" id="SRI-G6-g64"/>
                         </connections>
                     </switch>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En Route" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WRc-7p-3hS">
-                        <rect key="frame" x="16" y="16" width="69" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="En Route:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WRc-7p-3hS">
+                        <rect key="frame" x="16" y="16" width="72" height="21"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ku4-F8-60K">
-                        <rect key="frame" x="105" y="56" width="110" height="30"/>
-                        <state key="normal" title="Deliver Package"/>
+                        <rect key="frame" x="97" y="56" width="126" height="30"/>
+                        <state key="normal" title="  Deliver Package  ">
+                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
                         <connections>
                             <action selector="delivered:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2DG-QK-ISn"/>
                         </connections>
@@ -52,6 +54,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="deliverButton" destination="ku4-F8-60K" id="NV3-82-x5J"/>
                 <outlet property="enRouteSwitch" destination="7Nf-qO-EwO" id="QSy-8b-2ka"/>
             </connections>
             <point key="canvasLocation" x="34" y="80.5"/>

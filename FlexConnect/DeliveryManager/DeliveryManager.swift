@@ -21,10 +21,19 @@ class DeliveryManager {
             switch result {
             case .success(let order):
                 
-                order.deliveries.forEach({ CoreData.shared.saveDelivery($0.guid) })
+                order.deliveries.forEach({
+                    CoreData.shared.saveDelivery($0.guid)
+                    let state = $0.status == "Pending" ? false : true
+                    CoreData.shared.setEnroute($0.guid, state)
+                })
+                
                 self.deliveries = order.deliveries
+                
                 DispatchQueue.main.async { completion(self.deliveries) }
-            
+                
+                if self.enrouteDeliveries() > 0 {
+                    LocationManager.shared.start()
+                }
 
                 
 //                let stubs = DeliveryStubs.deliveries()
@@ -47,14 +56,13 @@ class DeliveryManager {
     
     func deliveryEnroute(_ delivery: Delivery, state: Bool) {
         var enrouteDelivery = delivery
-        enrouteDelivery.status = state ? "En route" : "Pending"
+        enrouteDelivery.status = state ? "En Route" : "Pending"
         if let index = self.deliveries.index(of: delivery) {
             self.deliveries[index] = enrouteDelivery
         }
     }
     
     func enrouteDeliveries() -> Int {
-        return self.deliveries.filter({ $0.status == "En route" }).count
+        return self.deliveries.filter({ $0.status == "En Route" }).count
     }
-    
 }

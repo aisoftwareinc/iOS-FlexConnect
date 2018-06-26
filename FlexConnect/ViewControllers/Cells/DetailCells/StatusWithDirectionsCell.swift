@@ -17,13 +17,20 @@ protocol StatusCellProtocol: class {
 class StatusWithDirectionsCell: UITableViewCell {
 
     @IBOutlet weak var enRouteSwitch: UISwitch!
-
+    @IBOutlet weak var deliverButton: UIButton!
     
     weak var delegate: StatusCellProtocol?
     
     override func awakeFromNib() {
         self.selectionStyle = .none
         self.backgroundColor = Colors.background
+        self.preservesSuperviewLayoutMargins = false
+        self.separatorInset = UIEdgeInsets.zero
+        self.layoutMargins = UIEdgeInsets.zero
+        
+        self.deliverButton.layer.borderWidth = 1.0
+        self.deliverButton.layer.cornerRadius = 3.0
+        self.deliverButton.layer.borderColor = UIColor.init(red: 0/255, green: 122/255, blue: 255/255, alpha: 1.0).cgColor
     }
 
     func configure(_ status: CDDeliveryStatus) {

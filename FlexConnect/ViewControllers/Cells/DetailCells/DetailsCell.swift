@@ -26,6 +26,9 @@ class DetailsCell: UITableViewCell {
         self.phoneNumber.backgroundColor = Colors.background
         self.phoneNumber.isEditable = false
         self.phoneNumber.dataDetectorTypes = .phoneNumber
+        self.preservesSuperviewLayoutMargins = false
+        self.separatorInset = UIEdgeInsets.zero
+        self.layoutMargins = UIEdgeInsets.zero
     }
     
     func configure(_ delivery: Delivery) {
