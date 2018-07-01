@@ -17,7 +17,7 @@ class DeliveryManager {
     private var deliveries = [Delivery]()
     
     func fetchDeliveries(_ completion: @escaping (([Delivery]?) -> ())) {
-        Networking.send(Requests.fetchDeliveries()) { (result: Result<OrderModel>) in
+        Networking.send(Requests.fetchDeliveries()) { (result: Result<Deliveries>) in
             switch result {
             case .success(let order):
                 

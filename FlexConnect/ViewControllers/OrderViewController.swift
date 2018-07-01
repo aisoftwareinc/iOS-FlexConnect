@@ -43,7 +43,6 @@ class OrderViewController: UIViewController {
         self.tableView.register(UINib.init(nibName: "OrderCell", bundle: nil), forCellReuseIdentifier: "OrderCell")
         self.tableView.register(UINib.init(nibName: "AppDescriptionCell", bundle: nil), forCellReuseIdentifier: "AppDescriptionCell")
         self.tableView.tableFooterView = UIView()
-        self.tableView.reloadData()
         self.tableView.backgroundColor = Colors.background
         //Register pull to refresh
         self.refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)

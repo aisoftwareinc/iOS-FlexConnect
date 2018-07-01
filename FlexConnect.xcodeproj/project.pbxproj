@@ -195,12 +195,12 @@
 		F2177F0A20A54AFF0035CE80 /* FlexConnect */ = {
 			isa = PBXGroup;
 			children = (
+				F2177F5220A8E4130035CE80 /* Coordinators */,
 				F2B8BBD920CCDF5200F72EE8 /* Stubs */,
 				F2E42D0C20CB32D20005BCA8 /* Extensions */,
 				F2E42D0920CB313D0005BCA8 /* DeliveryManager */,
 				F242BE9C20BE574C0033C8F5 /* Location */,
 				F2177F0B20A54AFF0035CE80 /* AppDelegate.swift */,
-				F2177F5220A8E4130035CE80 /* Coordinators */,
 				F227E53C20BA6110006DFCFE /* CoreData.swift */,
 				F22422F620B3C84B006C1C0E /* Keys.swift */,
 				F235F61820B0F48600548E42 /* Networking */,
@@ -626,21 +626,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3568HZCVV4;
+				DEVELOPMENT_TEAM = G84BFMS8WT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = FlexConnect/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = us.aisoftware.FlexConnect;
+				PRODUCT_BUNDLE_IDENTIFIER = us.aisoftware.flexConnectUS2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -649,21 +650,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3568HZCVV4;
+				DEVELOPMENT_TEAM = G84BFMS8WT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = FlexConnect/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = us.aisoftware.FlexConnect;
+				PRODUCT_BUNDLE_IDENTIFIER = us.aisoftware.flexConnectUS2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

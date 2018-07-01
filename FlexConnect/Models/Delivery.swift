@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OrderModel: Codable {
+struct Deliveries: Codable {
     let deliveries: [Delivery]
 }
 
@@ -62,9 +62,9 @@ struct Delivery: Codable, Equatable {
 
 // MARK: Convenience initializers
 
-extension OrderModel {
+extension Deliveries {
     init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(OrderModel.self, from: data) else { return nil }
+        guard let me = try? JSONDecoder().decode(Deliveries.self, from: data) else { return nil }
         self = me
     }
 

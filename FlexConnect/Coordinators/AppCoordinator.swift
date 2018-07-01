@@ -14,6 +14,7 @@ import MapKit
 
 class AppCoordinator: NSObject {
     private(set) var authToken: String?
+    private(set) var enteredPhone: String = ""
     private let deliveryManager = DeliveryManager()
     var rootViewController: UIViewController {
         return self.navigationController
@@ -50,7 +51,6 @@ class AppCoordinator: NSObject {
     }
     
     func fetchOrders() {
-        
         let orderController = OrderViewController.init(nibName: nil, bundle: nil)
         orderController.title = "Orders"
         orderController.delegate = self
@@ -79,33 +79,38 @@ extension AppCoordinator: LoginControllerProtocol {
         switch state {
         case .authorizeToken(let enteredToken):
             if self.authToken == enteredToken {
-                Networking.send(Requests.fetchDeliveries()) { (result: Result<OrderModel>) in
-                    switch result {
-                    case .success(let orders):
-                        print(orders)
-                        let orderController = OrderViewController.init(orders.deliveries)
-                        orderController.title = "Orders"
-                        orderController.delegate = self
-                        self.navigationController.navigationBar.isHidden = false
-                        self.navigationController.pushViewController(orderController, animated: true)
-                    case .failure:
+                TokenHelper.saveNumber(self.enteredPhone)
+                self.deliveryManager.fetchDeliveries { (deliveries) in
+                    guard let deliveries = deliveries else {
                         self.navigationController.present(Utilities.showAlert("There was error fetching deliveries."), animated: true, completion: nil)
                         controller.setState(.requestToken(""))
+                        return
                     }
+                    let orderController = OrderViewController.init(deliveries)
+                    orderController.title = "Orders"
+                    orderController.delegate = self
+                    self.navigationController.navigationBar.isHidden = false
+                    DispatchQueue.main.async { self.navigationController.pushViewController(orderController, animated: true) }
                 }
             } else {
                 self.navigationController.present(Utilities.showAlert("Incorrect token entered."), animated: true, completion: nil)
+                self.enteredPhone = ""
                 controller.setState(.requestToken(""))
             }
         case .requestToken(let phoneNumber):
+            if phoneNumber == "0000000000" {
+                TokenHelper.saveNumber(phoneNumber)
+                self.stubsEnter()
+                return
+            }
             Networking.send(Requests.authCode(phoneNumber)) { (result: Result<AuthCode>) in
                 switch result {
                 case .success(let authCode):
-                    TokenHelper.saveNumber(phoneNumber)
+                    self.enteredPhone = phoneNumber
                     self.authToken = authCode.authCode
-                    controller.setState(.authorizeToken(authCode.authCode))
+                    DispatchQueue.main.async { controller.setState(.authorizeToken(authCode.authCode)) }
                 case .failure:
-                    controller.setState(.requestToken(""))
+                    DispatchQueue.main.async { controller.setState(.requestToken("")) }
                 }
             }
         }
@@ -114,11 +119,27 @@ extension AppCoordinator: LoginControllerProtocol {
     func reset(_ controller: LoginViewController) {
         controller.setState(.requestToken(""))
     }
+    
+    func stubsEnter() {
+        self.deliveryManager.fetchDeliveries { (deliveries) in
+            guard let deliveries = deliveries else {
+                self.navigationController.present(Utilities.showAlert("There was error fetching deliveries."), animated: true, completion: nil)
+                self.logOut()
+                return
+            }
+            let orderController = OrderViewController.init(deliveries)
+            orderController.title = "Orders"
+            orderController.delegate = self
+            self.navigationController.navigationBar.isHidden = false
+            DispatchQueue.main.async { self.navigationController.pushViewController(orderController, animated: true) }
+        }
+    }
 }
 
 extension AppCoordinator: OrderControllerProtocol {
     func logOut() {
         TokenHelper.removeNumber()
+        self.enteredPhone = ""
         let loginController = LoginViewController.init()
         loginController.delegate = self
         loginController.title = "FlexConnect"
