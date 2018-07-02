@@ -28,6 +28,10 @@ class LoginViewController: UIViewController {
     
     weak var delegate: LoginControllerProtocol?
     var loginState: LoginState = .requestToken("")
+    private lazy var adjustedHeight = CGRect.init(x: 0, y: -50, width: self.view.frame.width, height: self.view.frame.height)
+    private lazy var initialHeight = CGRect.init(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+    var adjustHeight: Bool = true
+    
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -45,6 +49,26 @@ class LoginViewController: UIViewController {
         self.resetButton.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = Colors.background
+        
+        if Display.isSmallDevice {
+            NotificationCenter.default.addObserver(self, selector: #selector(self.moveViewUp), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        }
+        self.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.dismissKeyboard)))
+    }
+    
+    @objc
+    private func moveViewUp() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.adjustHeight == true ? (self.view.frame = self.adjustedHeight) : (self.view.frame = self.initialHeight)
+            })
+            self.adjustHeight = !self.adjustHeight
+        }
+    }
+    
+    @objc
+    private func dismissKeyboard() {
+        entryField.resignFirstResponder()
     }
     
     func setState(_ state: LoginState) {

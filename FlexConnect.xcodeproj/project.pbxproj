@@ -41,6 +41,7 @@
 		F2177F4F20A7F1BB0035CE80 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2177F4E20A7F1BB0035CE80 /* SystemConfiguration.framework */; };
 		F2177F5120A7F1C30035CE80 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2177F5020A7F1C30035CE80 /* UIKit.framework */; };
 		F2177F5520A8E9C60035CE80 /* TokenHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2177F5420A8E9C60035CE80 /* TokenHelper.swift */; };
+		F21AEAFB20E9D77C00290377 /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AEAFA20E9D77C00290377 /* Display.swift */; };
 		F22422F120B3C59D006C1C0E /* AuthCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22422F020B3C59D006C1C0E /* AuthCode.swift */; };
 		F22422F320B3C6A8006C1C0E /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22422F220B3C6A8006C1C0E /* Requests.swift */; };
 		F22422F520B3C704006C1C0E /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22422F420B3C704006C1C0E /* URLs.swift */; };
@@ -112,6 +113,7 @@
 		F2177F4E20A7F1BB0035CE80 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F2177F5020A7F1C30035CE80 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F2177F5420A8E9C60035CE80 /* TokenHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHelper.swift; sourceTree = "<group>"; };
+		F21AEAFA20E9D77C00290377 /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
 		F22422F020B3C59D006C1C0E /* AuthCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCode.swift; sourceTree = "<group>"; };
 		F22422F220B3C6A8006C1C0E /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
 		F22422F420B3C704006C1C0E /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				F28694FD20B667C8001DBAE5 /* Utilities.swift */,
 				F200D43520BFAF0400E22442 /* ImageUtility.swift */,
 				F28E5ECA20D5BADE00685EE6 /* Colors.swift */,
+				F21AEAFA20E9D77C00290377 /* Display.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				F235F60A20B0C88300548E42 /* DetailsCell.swift in Sources */,
 				F2177F2420A7E4B90035CE80 /* LoginViewController.swift in Sources */,
 				F2177F5520A8E9C60035CE80 /* TokenHelper.swift in Sources */,
+				F21AEAFB20E9D77C00290377 /* Display.swift in Sources */,
 				F2177F0C20A54AFF0035CE80 /* AppDelegate.swift in Sources */,
 				F2E1A42420C8B6D600C8BFD7 /* DirectionDetails.swift in Sources */,
 				F28694FE20B667C8001DBAE5 /* Utilities.swift in Sources */,
