@@ -34,7 +34,7 @@ class LocationManager: NSObject {
     
     func start() {
         if !self.isUpdating {
-        self.locationManager.startUpdatingLocation()
+        self.locationManager.startMonitoringSignificantLocationChanges()
             self.isUpdating = true
             self.timer = Timer.scheduledTimer(withTimeInterval: self.timeInterval, repeats: true, block: { (Timer) in
                 self.sendLocation()
